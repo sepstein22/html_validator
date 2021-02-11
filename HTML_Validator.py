@@ -12,10 +12,12 @@ def validate_html(html):
     >>> validate_html('<strong>example')
     False
     '''
-
+    try:
+        sorted_tags = _extract_tags(html)
+    except Exception as e:
+        return False
     stack = []
     balanced = True
-    sorted_tags = _extract_tags(html)
     for index, tag in enumerate(sorted_tags):
         if "/" not in tag:
             stack.append(tag)
@@ -24,8 +26,8 @@ def validate_html(html):
                 balanced = False
             else:
                 top = stack.pop()
-                if top[1:] != tag[2:]:
-                    return False
+                if tag[2:] != top[1:]:
+                    balanced = False
     if balanced and stack == []:
         return True
     else:
@@ -46,14 +48,16 @@ def _extract_tags(html):
     ['<strong>', '</strong>']
     '''
     output = []
-
-    for i in range(len(html)):
+    l = len(html) - 1
+    
+    for i in range(l):
         if html[i] == '<':
             string = ''
             x = i
 
-            while html[x] != '>':
+            while html[x] != '>' and x < l:
                 string += html[x]
+                x += 1
             string += '>'
             output.append(string)
     return output
