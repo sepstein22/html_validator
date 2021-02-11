@@ -18,18 +18,17 @@ def validate_html(html):
         sorted_tags = _extract_tags(html)
     except Exception as e:
         return False
-    for index in range(len(sorted_tags)):
-        sym = sorted_tags[index]
-        if sym[1] != '/':
-            stack.append(sym)
+    for tag in sorted_tags:
+        if '/' not in tag:
+            stack.append(tag)
         else:
             if stack == []:
                 balanced = False
             else:
                 top = stack.pop()
-                if sym[2:] != top[1:]:
+                if tag[2:] != top[1:]:
                     balanced = False
-    if balanced and stack == []:
+    if balanced and (stack == []):
         return True
     else:
         return False
