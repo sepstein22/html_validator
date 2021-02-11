@@ -12,21 +12,22 @@ def validate_html(html):
     >>> validate_html('<strong>example')
     False
     '''
+    stack = []
+    balanced = True
     try:
         sorted_tags = _extract_tags(html)
     except Exception as e:
         return False
-    stack = []
-    balanced = True
-    for index, tag in enumerate(sorted_tags):
-        if "/" not in tag:
-            stack.append(tag)
+    for index in range(len(sorted_tags)):
+        sym = sorted_tags[index]
+        if sym[1] != '/':
+            stack.append(sym)
         else:
             if stack == []:
                 balanced = False
             else:
                 top = stack.pop()
-                if tag[2:] != top[1:]:
+                if sym[2:] != top[1:]:
                     balanced = False
     if balanced and stack == []:
         return True
