@@ -14,10 +14,8 @@ def validate_html(html):
     '''
     stack = []
     balanced = True
-    try:
-        sorted_tags = _extract_tags(html)
-    except Exception as e:
-        return False
+    sorted_tags = _extract_tags(html)
+
     for tag in sorted_tags:
         if '/' not in tag:
             stack.append(tag)
@@ -45,18 +43,18 @@ def _extract_tags(html):
     stripping out all text not contained within angle brackets.
 
     >>> _extract_tags('Python <strong>rocks</strong>!')
-    ['<strong>', '</strong>']
+        ['<strong>', '</strong>']
     '''
     output = []
-    leng = len(html) - 1
-    for i in range(leng):
-        if html[i] == '<':
-            string = ''
-            x = i
 
-            while html[x] != '>' and x < leng:
-                string += html[x]
-                x += 1
+    for i in range(len(html)):
+        string = ''
+        character = html[i]
+        if character == '<':
+            while character != '>':
+                string += character
+                i = i+1
+                character = html[i]
             string += '>'
             output.append(string)
     return output
