@@ -14,14 +14,13 @@ def validate_html(html):
     False
     '''
     try:
-        tags = _extract_tags(html)
+        sorted_tags = _extract_tags(html)
     except Exception as e:
         print(e)
         return False
 
     stack = []
     balanced = True
-    sorted_tags = _extract_tags(html)
     for tag in sorted_tags:
         if '/' not in tag:
             stack.append(tag)
@@ -59,16 +58,16 @@ def _extract_tags(html):
             if html[i] == '<':
                 string += html[i]
                 i += 1
-            
+
                 while html[i] != '>' and i < leng:
                     string += html[i]
                     i += 1
                 string += '>'
                 output.append(string)
         return output
-    elif ('<' in html): 
-        raise ValueError ('found < without an >')
-    else: 
+    elif ('<' in html):
+        raise ValueError('found < without an >')
+    else:
         return []
 # string += html[x]
 # x += 1
