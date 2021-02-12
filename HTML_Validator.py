@@ -51,7 +51,7 @@ def _extract_tags(html):
     ['<strong>', '</strong>']
     '''
     output = []
-    leng = len(html)-1
+    leng = len(html) - 1
     if ('<' in html) & ('>' in html):
         for i in range(leng):
             string = ''
